@@ -1,0 +1,107 @@
+<html lang="en" >
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+    <style>
+     .tabsdemoDynamicHeight md-content {
+        background-color: transparent !important; }
+     .tabsdemoDynamicHeight md-content md-tabs {
+        background: #f6f6f6;
+        border: 1px solid #e1e1e1; }
+     .tabsdemoDynamicHeight md-content md-tabs md-tabs-wrapper {
+        background: white; }
+     .tabsdemoDynamicHeight md-content h1:first-child {
+        margin-top: 0; }
+      #popupContainer {
+        position: relative; }
+    </style>
+</head>
+<body ng-app="MyApp" ng-cloak>
+
+<!-- Angular Material requires Angular.js Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+<!-- Angular Material Library -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+<!-- Your application bootstrap  -->
+<script type="text/javascript" src="app.js"></script>
+
+<div ng-cloak="" class="tabsdemoDynamicHeight" ng-app="MyApp" id="popupContainer">
+
+    <md-toolbar class="md-theme-light">
+        <h2 class="md-toolbar-tools">
+            <span>Memsource App</span>
+        </h2>
+    </md-toolbar>
+
+    <md-content>
+        <md-tabs md-dynamic-height="" md-border-bottom="">
+            <md-tab label="Setup">
+                <md-content class="md-padding">
+
+                    <md-content layout-gt-sm="row" layout-padding="">
+                        <div>
+                            <form ng-submit="submit()" ng-controller="SetupCtrl">
+                            <md-input-container>
+                                <label>Username</label>
+                                <input ng-model="username">
+                            </md-input-container>
+
+                            <md-input-container>
+                                <label>Password</label>
+                                <input ng-model="password" type="password">
+                            </md-input-container>
+                            <br>
+                            <!--<input class="md-raised md-primary" type="submit" id="submit" value="Update" />-->
+                                <md-button ng-disabled="checkInputFields()" type="submit" id="submit" class="md-raised md-primary">Update</md-button>
+                                <span ng-hide="!success">Saved</span>
+                            </form>
+                        </div>
+                    </md-content>
+
+                </md-content>
+            </md-tab>
+
+            <div ng-controller="ProjectsCtrl" >
+            <md-tab ng-disabled="projectsDisabled()" label="Projects" md-on-select="loadProjects()">
+                <md-content class="md-padding">
+
+                    <div>
+                        <md-progress-linear ng-hide="loaded" md-mode="indeterminate"></md-progress-linear>
+
+
+                        <md-list ng-hide="!noError" class="md-dense" flex="">
+                            <md-list-item class="md-3-line" ng-repeat="project in projects">
+                                <div class="md-list-item-text" layout="column">
+                                    <h3><b>{{ project.name }}</b></h3>
+                                    <h4>{{ project.status }}</h4>
+                                    <p>{{ project.sourceLang }} &rarr;
+                                    <span ng-repeat="lang in project.targetLangs">{{lang}}{{$last ? '' : ', '}}</span>
+                                    </p>
+                                </div>
+                            </md-list-item>
+                        </md-list>
+
+                        <div ng-hide="noError">{{errorText}}</div>
+                    </div>
+
+
+
+
+                </md-content>
+            </md-tab>
+            </div>
+
+        </md-tabs>
+    </md-content>
+</div>
+
+</body>
+
+</html>
